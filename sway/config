@@ -13,14 +13,22 @@ set $term alacritty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu ulauncher
+set $filemanager dolphin
 
 ### Config
-set focus_follows_mouse no
+focus_follows_mouse no
+smart_borders on
+gaps inner 5
+gaps outer -3
+smart_gaps on
+floating_minimum_size 1200 x 250
+# default_border none
+# default_floating_border none
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg @datadir@/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/.config/sway/background.jpg fill
 
 
 ### Idle configuration
@@ -54,6 +62,9 @@ input "type:keyboard" {
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
+
+    # Open file manager wit $mod + e
+    bindsym $mod+e exec $filemanager
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
@@ -132,8 +143,8 @@ bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 10
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
-    bindsym $mod+w layout tabbed
-    bindsym $mod+e layout toggle split
+    bindsym $mod+t layout tabbed
+    bindsym $mod+w layout toggle split
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -183,24 +194,16 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
+
+### Status Bar
+
 bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    swaybar_command waybar
 }
 
+exec pipewire &
+exec pipewire-pulse &
 exec /usr/lib/libexec/polkit-kde-authentication-agent-1 &
+exec gnome-keyring-daemon &
 
 include @sysconfdir@/sway/config.d/*
