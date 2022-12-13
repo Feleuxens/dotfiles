@@ -69,7 +69,8 @@
 			"", // Icon: battery-quarter
 			""  // Icon: battery-empty
 		],
-		"tooltip": false
+		"tooltip": false,
+		"bat": "BAT0",
 	},
 
 	"clock#time": {
@@ -176,7 +177,8 @@
 			"", // Icon: temperature-three-quarters
 			""  // Icon: temperature-full
 		],
-		"tooltip": false
+		"tooltip": false,
+		"thermal-zone": 3, // corresponds to x86_pkg_temp on my machine
 	},
 
 	"custom/alsa": {
